@@ -1,0 +1,202 @@
+[
+  {
+    "id": "num_001",
+    "category": "労働衛生（環境）",
+    "context": "事務所衛生基準規則における室温の調整基準",
+    "question_text": "室温は {slot} ℃以上、28℃以下になるように努めなければならない。",
+    "correct_value": 17,
+    "options": [15, 17, 20, 22],
+    "unit": "℃",
+    "explanation_short": "寒すぎてもダメ！「いーな（17）」室温で覚えよう。"
+  },
+  {
+    "id": "num_002",
+    "category": "労働衛生（環境）",
+    "context": "空気調和設備を設けている場合の湿度基準",
+    "question_text": "湿度は40%以上、 {slot} %以下になるように努めなければならない。",
+    "correct_value": 70,
+    "options": [60, 65, 70, 80],
+    "unit": "%",
+    "explanation_short": "湿度は「40〜70」。これ以外の数字はひっかけ！"
+  },
+  {
+    "id": "num_003",
+    "category": "労働衛生（環境）",
+    "context": "事務所の照度基準（一般的な事務作業）",
+    "question_text": "一般的な事務作業を行う場合、照度は {slot} ルクス以上とする。",
+    "correct_value": 300,
+    "options": [150, 200, 300, 500],
+    "unit": "ルクス",
+    "explanation_short": "事務作業は「さんびゃく（300）」ルクス。パソコン作業は更に高め。"
+  },
+  {
+    "id": "num_004",
+    "category": "労働衛生（環境）",
+    "context": "事務所の気積（空気の容積）基準",
+    "question_text": "労働者1人あたりの気積は {slot} m³以上としなければならない。",
+    "correct_value": 10,
+    "options": [5, 8, 10, 15],
+    "unit": "m³",
+    "explanation_short": "「じゅう（10）」m³。一人に10立方メートルの空間を確保！"
+  },
+  {
+    "id": "num_005",
+    "category": "労働衛生（環境）",
+    "context": "CO₂（二酸化炭素）濃度の基準",
+    "question_text": "室内のCO₂濃度は {slot} ppm以下に保つ。",
+    "correct_value": 1000,
+    "options": [500, 800, 1000, 1500],
+    "unit": "ppm",
+    "explanation_short": "CO₂は「せん（1000）」ppm。「いっセン（一千）」で覚える。"
+  },
+  {
+    "id": "num_006",
+    "category": "労働衛生（環境）",
+    "context": "一酸化炭素（CO）の許容濃度",
+    "question_text": "室内のCO濃度は {slot} ppm以下に保つ。",
+    "correct_value": 10,
+    "options": [5, 10, 20, 50],
+    "unit": "ppm",
+    "explanation_short": "COは「じゅう（10）」ppm。CO₂の100分の1！"
+  },
+  {
+    "id": "num_007",
+    "category": "労働衛生（環境）",
+    "context": "騒音の許容基準（事務所内）",
+    "question_text": "事務所内の騒音レベルは {slot} デシベル以下が望ましい。",
+    "correct_value": 60,
+    "options": [40, 50, 60, 70],
+    "unit": "dB",
+    "explanation_short": "騒音は「ろくじゅう（60）」dB。普通の会話レベル。"
+  },
+  {
+    "id": "num_008",
+    "category": "労働衛生（有害物質）",
+    "context": "鉛業務の作業環境測定の頻度",
+    "question_text": "鉛業務の作業場は {slot} か月以内ごとに1回、作業環境測定を行う。",
+    "correct_value": 1,
+    "options": [1, 3, 6, 12],
+    "unit": "か月",
+    "explanation_short": "鉛は超危険！毎月（1か月）測定が必要。"
+  },
+  {
+    "id": "num_009",
+    "category": "労働衛生（有害物質）",
+    "context": "有機溶剤の作業環境測定の頻度",
+    "question_text": "有機溶剤を取り扱う作業場は {slot} か月以内ごとに1回、作業環境測定を行う。",
+    "correct_value": 6,
+    "options": [1, 3, 6, 12],
+    "unit": "か月",
+    "explanation_short": "有機溶剤は「ろく（6）」か月ごと。半年に1回！"
+  },
+  {
+    "id": "num_010",
+    "category": "関係法令",
+    "context": "定期健康診断の実施頻度",
+    "question_text": "事業者は労働者に対し、 {slot} 年以内ごとに1回、定期健康診断を実施する。",
+    "correct_value": 1,
+    "options": [1, 2, 3, 5],
+    "unit": "年",
+    "explanation_short": "定期健診は年1回！これは基本中の基本。"
+  },
+  {
+    "id": "num_011",
+    "category": "関係法令",
+    "context": "特定業務従事者の健康診断頻度",
+    "question_text": "深夜業等の特定業務従事者には、 {slot} か月以内ごとに1回、健康診断を行う。",
+    "correct_value": 6,
+    "options": [3, 6, 9, 12],
+    "unit": "か月",
+    "explanation_short": "特定業務は「ろく（6）」か月。年に2回！"
+  },
+  {
+    "id": "num_012",
+    "category": "関係法令",
+    "context": "衛生管理者の選任が必要な事業場規模",
+    "question_text": "常時 {slot} 人以上の労働者を使用する事業場は衛生管理者を選任する。",
+    "correct_value": 50,
+    "options": [10, 30, 50, 100],
+    "unit": "人",
+    "explanation_short": "「ごじゅう（50）」人から。50人でいろいろ義務が発生！"
+  },
+  {
+    "id": "num_013",
+    "category": "関係法令",
+    "context": "産業医の選任が必要な事業場規模",
+    "question_text": "常時 {slot} 人以上の労働者を使用する事業場は産業医を選任する。",
+    "correct_value": 50,
+    "options": [30, 50, 100, 300],
+    "unit": "人",
+    "explanation_short": "産業医も「ごじゅう（50）」人から。衛生管理者とセット！"
+  },
+  {
+    "id": "num_014",
+    "category": "関係法令",
+    "context": "安全衛生委員会の設置義務",
+    "question_text": "常時 {slot} 人以上の労働者を使用する事業場は衛生委員会を設置する。",
+    "correct_value": 50,
+    "options": [10, 30, 50, 100],
+    "unit": "人",
+    "explanation_short": "これも「ごじゅう（50）」人。50はマジックナンバー！"
+  },
+  {
+    "id": "num_015",
+    "category": "関係法令",
+    "context": "健康診断個人票の保存期間（一般）",
+    "question_text": "一般健康診断の個人票は {slot} 年間保存しなければならない。",
+    "correct_value": 5,
+    "options": [3, 5, 7, 10],
+    "unit": "年",
+    "explanation_short": "一般健診は「ご（5）」年保存。特殊健診はもっと長い！"
+  },
+  {
+    "id": "num_016",
+    "category": "労働衛生（有害物質）",
+    "context": "特殊健康診断の結果報告",
+    "question_text": "特殊健康診断の結果は、遅滞なく所轄労働基準監督署長に報告する。その保存期間は {slot} 年間。",
+    "correct_value": 5,
+    "options": [3, 5, 7, 30],
+    "unit": "年",
+    "explanation_short": "特殊健診も「ご（5）」年保存が基本。アスベストは40年！"
+  },
+  {
+    "id": "num_017",
+    "category": "労働生理",
+    "context": "人体の正常体温",
+    "question_text": "健康な成人の腋窩（わきの下）体温の正常値は約 {slot} ℃である。",
+    "correct_value": 37,
+    "options": [35, 36, 37, 38],
+    "unit": "℃",
+    "explanation_short": "平熱は「さんじゅうなな（37）」℃前後。36.5〜37.5が正常範囲。"
+  },
+  {
+    "id": "num_018",
+    "category": "労働生理",
+    "context": "成人の1日の所要水分量",
+    "question_text": "成人が1日に必要とする水分量は約 {slot} mLである。",
+    "correct_value": 2500,
+    "options": [1500, 2000, 2500, 3000],
+    "unit": "mL",
+    "explanation_short": "1日「にせんごひゃく（2500）」mL。うち1000mLは食事から。"
+  },
+  {
+    "id": "num_019",
+    "category": "労働衛生（環境）",
+    "context": "休憩室の必要面積",
+    "question_text": "事業場の休憩室は、労働者1人あたり {slot} m²以上の広さを確保することが望ましい。",
+    "correct_value": 1,
+    "options": [0.5, 1, 2, 3],
+    "unit": "m²",
+    "explanation_short": "1人あたり「いち（1）」m²。最低限の休憩スペース。"
+  },
+  {
+    "id": "num_020",
+    "category": "労働衛生（環境）",
+    "context": "VDT作業の連続作業時間",
+    "question_text": "VDT作業は、連続作業時間が {slot} 時間を超えないようにする。",
+    "correct_value": 1,
+    "options": [1, 2, 3, 4],
+    "unit": "時間",
+    "explanation_short": "VDTは「いち（1）」時間で休憩。目を守ろう！"
+  }
+]
