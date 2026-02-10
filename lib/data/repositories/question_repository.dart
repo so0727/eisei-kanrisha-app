@@ -9,6 +9,13 @@ class QuestionRepository {
 
   List<Question>? get cachedQuestions => _cachedQuestions;
 
+  /// 旧形式カテゴリ（関係法令・労働衛生）を5カテゴリ形式に正規化
+  static String _normalizeCategory(String category) {
+    if (category == '関係法令') return '関係法令（有害業務以外）';
+    if (category == '労働衛生') return '労働衛生（有害業務以外）';
+    return category;
+  }
+
   /// JSONファイルから問題データを読み込む
   Future<List<Question>> loadQuestions() async {
     if (_cachedQuestions != null) {
@@ -34,9 +41,13 @@ class QuestionRepository {
 
   /// カテゴリでフィルタして取得
   /// [shuffle] がfalseの場合、固定順（ID順）で返す
+  /// 旧形式「関係法令」「労働衛生」は5カテゴリにマッピングして取得
   Future<List<Question>> loadByCategory(String category, {int? limit, bool shuffle = true}) async {
     final questions = await loadQuestions();
-    final filtered = questions.where((q) => q.category == category).toList();
+    final filtered = questions.where((q) {
+      final norm = _normalizeCategory(q.category ?? '');
+      return norm == category || q.category == category;
+    }).toList();
     if (shuffle) {
       filtered.shuffle();
     }
@@ -59,9 +70,8 @@ class QuestionRepository {
   }
 
   /// 全カテゴリ名を取得（試験の出題順でソート）
+  /// 旧形式「関係法令」「労働衛生」は5カテゴリに集約して重複を解消
   Future<List<String>> getCategories() async {
-    final questions = await loadQuestions();
-    final categories = questions.map((q) => q.category).toSet().toList();
     const order = [
       '関係法令（有害業務）',
       '労働衛生（有害業務）',
@@ -69,31 +79,39 @@ class QuestionRepository {
       '労働衛生（有害業務以外）',
       '労働生理',
     ];
-    categories.sort((a, b) {
-      final ia = order.indexOf(a);
-      final ib = order.indexOf(b);
-      if (ia >= 0 && ib >= 0) return ia.compareTo(ib);
-      if (ia >= 0) return -1;
-      if (ib >= 0) return 1;
-      return a.compareTo(b);
-    });
-    return categories;
+    final questions = await loadQuestions();
+    final normalized = questions.map((q) => _normalizeCategory(q.category ?? '')).toSet();
+    return order.where((c) => normalized.contains(c)).toList();
   }
 
-  /// 全年度を取得（降順ソート）
+  /// 全年度を取得（新しい順でソート: 2025年10月→2025年4月→2024年10月→...）
   Future<List<String>> getYears() async {
     final questions = await loadQuestions();
-    final years = questions.map((q) => q.year).toSet().toList()
-      ..sort((a, b) => b.compareTo(a));
+    final years = questions.map((q) => q.year).toSet().toList();
+    years.sort((a, b) {
+      final pa = a.split('_');
+      final pb = b.split('_');
+      if (pa.length != 2 || pb.length != 2) return b.compareTo(a);
+      final ya = int.tryParse(pa[0]) ?? 0;
+      final yb = int.tryParse(pb[0]) ?? 0;
+      if (ya != yb) return yb.compareTo(ya);
+      final na = int.tryParse(pa[1]) ?? 0;
+      final nb = int.tryParse(pb[1]) ?? 0;
+      final ma = (na == 1 || na == 4) ? 4 : (na == 2 || na == 10 ? 10 : na);
+      final mb = (nb == 1 || nb == 4) ? 4 : (nb == 2 || nb == 10 ? 10 : nb);
+      return mb.compareTo(ma);
+    });
     return years;
   }
 
   /// カテゴリ別の問題数を取得
+  /// 旧形式「関係法令」「労働衛生」は5カテゴリに集約してカウント
   Future<Map<String, int>> getCategoryCounts() async {
     final questions = await loadQuestions();
     final Map<String, int> counts = {};
     for (final q in questions) {
-      counts[q.category] = (counts[q.category] ?? 0) + 1;
+      final cat = _normalizeCategory(q.category ?? '');
+      counts[cat] = (counts[cat] ?? 0) + 1;
     }
     return counts;
   }
@@ -106,7 +124,8 @@ class QuestionRepository {
         q.year?.startsWith('2023') == true);
     final Map<String, int> counts = {};
     for (final q in freeQuestions) {
-      counts[q.category] = (counts[q.category] ?? 0) + 1;
+      final cat = _normalizeCategory(q.category ?? '');
+      counts[cat] = (counts[cat] ?? 0) + 1;
     }
     return counts;
   }

@@ -196,7 +196,9 @@ class _QuizScreenState extends ConsumerState<QuizScreen>
     final progress = ref.watch(progressProvider);
     final settings = ref.watch(appSettingsProvider);
     final theme = Theme.of(context);
-    final showExplanation = session.showResult &&
+    final isExamMode = session.config.mode == QuizMode.year;
+    final showExplanation = !isExamMode &&
+        session.showResult &&
         (!session.isCorrect || settings.showExplanationAlways);
     ref.listen<QuizSessionState>(quizSessionProvider, (prev, next) {
       if (next.showPremiumDialog && !(prev?.showPremiumDialog ?? false)) {
