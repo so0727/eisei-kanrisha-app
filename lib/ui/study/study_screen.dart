@@ -362,8 +362,8 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
             final year = _years[index];
             final count = _yearCounts[year] ?? 0;
             
-            // 2024, 2025年度はPremium
-            final isPremiumYear = year.startsWith('2020') || year.startsWith('2021') || year.startsWith('2024') || year.startsWith('2025');
+            // 2018, 2019, 2020, 2021, 2024, 2025年度はPro限定
+            final isPremiumYear = year.startsWith('2018') || year.startsWith('2019') || year.startsWith('2020') || year.startsWith('2021') || year.startsWith('2024') || year.startsWith('2025');
             final isLocked = isPremiumYear && subscription == UserSubscriptionStatus.free;
 
             return Padding(

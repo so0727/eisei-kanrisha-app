@@ -269,12 +269,16 @@ class SettingsScreen extends ConsumerWidget {
               }
             },
           ),
-          if (isPro && kDebugMode)
+          if (kDebugMode)
             ListTile(
               leading: const Icon(Icons.bug_report),
-              title: const Text('デバッグ: Freeに戻す'),
+              title: Text(isPro ? 'デバッグ: Freeに戻す' : 'デバッグ: Proにする'),
               onTap: () async {
-                await ref.read(userSubscriptionProvider.notifier).debugResetToFree();
+                if (isPro) {
+                  await ref.read(userSubscriptionProvider.notifier).debugResetToFree();
+                } else {
+                  await ref.read(userSubscriptionProvider.notifier).enablePro();
+                }
               },
             ),
 

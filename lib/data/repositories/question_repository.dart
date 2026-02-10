@@ -58,11 +58,25 @@ class QuestionRepository {
     return questions.where((q) => ids.contains(q.id)).toList()..shuffle();
   }
 
-  /// 全カテゴリ名を取得（ソート済み）
+  /// 全カテゴリ名を取得（試験の出題順でソート）
   Future<List<String>> getCategories() async {
     final questions = await loadQuestions();
-    final categories = questions.map((q) => q.category).toSet().toList()
-      ..sort();
+    final categories = questions.map((q) => q.category).toSet().toList();
+    const order = [
+      '関係法令（有害業務）',
+      '労働衛生（有害業務）',
+      '関係法令（有害業務以外）',
+      '労働衛生（有害業務以外）',
+      '労働生理',
+    ];
+    categories.sort((a, b) {
+      final ia = order.indexOf(a);
+      final ib = order.indexOf(b);
+      if (ia >= 0 && ib >= 0) return ia.compareTo(ib);
+      if (ia >= 0) return -1;
+      if (ib >= 0) return 1;
+      return a.compareTo(b);
+    });
     return categories;
   }
 
