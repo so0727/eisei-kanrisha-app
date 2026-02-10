@@ -425,7 +425,7 @@ class _StudyScreenState extends ConsumerState<StudyScreen> {
                                       color: isLocked ? AppTheme.textSecondary : AppTheme.textPrimary,
                                     ),
                                   ),
-                                  if (isPremiumYear) ...[
+                                  if (isLocked) ...[
                                     const SizedBox(width: 8),
                                     Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
