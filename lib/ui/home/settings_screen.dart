@@ -1,11 +1,42 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../app/theme.dart';
 import '../../providers/app_settings_provider.dart';
 import '../../providers/user_subscription_provider.dart';
 import '../../providers/quiz_provider.dart';
 import '../../utils/local_notification_service.dart';
 import '../../utils/purchase_service.dart';
+
+/// 利用規約・プライバシーポリシーを公開しているベースURL（1箇所だけ変更すればOK）
+/// 例: GitHub Pages なら https://あなたのユーザー名.github.io/eisei_kanrisha_app
+const String kLegalPagesBaseUrl =
+    'https://so0727.github.io/eisei-kanrisha-app';
+
+const String kTermsOfServiceUrl = '$kLegalPagesBaseUrl/terms.html';
+const String kPrivacyPolicyUrl = '$kLegalPagesBaseUrl/';
+
+Future<void> _openUrl(BuildContext context, String urlString) async {
+  final uri = Uri.parse(urlString);
+  try {
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('URLを開けませんでした')),
+        );
+      }
+    }
+  } catch (_) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('URLを開けませんでした')),
+      );
+    }
+  }
+}
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -238,13 +269,13 @@ class SettingsScreen extends ConsumerWidget {
               }
             },
           ),
-          if (isPro)
-            ListTile( // デバッグ用ボタン（リリース時は隠すか削除）
-               leading: const Icon(Icons.bug_report),
-               title: const Text('デバッグ: Freeに戻す'),
-               onTap: () async {
-                  await ref.read(userSubscriptionProvider.notifier).debugResetToFree();
-               },
+          if (isPro && kDebugMode)
+            ListTile(
+              leading: const Icon(Icons.bug_report),
+              title: const Text('デバッグ: Freeに戻す'),
+              onTap: () async {
+                await ref.read(userSubscriptionProvider.notifier).debugResetToFree();
+              },
             ),
 
           const Divider(height: 32),
@@ -255,17 +286,13 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.description_outlined),
             title: const Text('利用規約'),
             trailing: const Icon(Icons.open_in_new, size: 16),
-            onTap: () {
-              // TODO: 利用規約URLへ遷移
-            },
+            onTap: () => _openUrl(context, kTermsOfServiceUrl),
           ),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
             title: const Text('プライバシーポリシー'),
             trailing: const Icon(Icons.open_in_new, size: 16),
-            onTap: () {
-              // TODO: プライバシーポリシーURLへ遷移
-            },
+            onTap: () => _openUrl(context, kPrivacyPolicyUrl),
           ),
           ListTile(
             leading: const Icon(Icons.info_outline),
